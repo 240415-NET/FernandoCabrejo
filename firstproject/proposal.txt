@@ -1,0 +1,24 @@
+My app is about tracking meal plans for people who subscribe.
+
+-Models:       
+-	User
+o	userId (int)
+o	username (string)
+-	Meal
+o	mealSelection
+o	price
+o	datetime
+-	ProteinPlus
+o	Chicken potpie
+o	Garlic Butter Steak
+o	Roasted Turkey
+-	Keto
+o	Chicken Piccata
+o	Beef Stroganoff
+o	Lime Salmon
+-	Carbless
+o	Cauliflower Fried Rice
+o	Coconut Grilled Chicken
+o	Egg Salad
+
+Proposal is to login as user, go into Meals, select one of them, within the selection, choose an item
