@@ -1,24 +1,90 @@
+FCProjectOne
+Requirements:
+
+1. The application should be a C# Console Application
+2. The application should build and run
+3. The application should interact with users and provide some console UI
+4. The application should allow for multiple users to log in and persist their data
+5. The application should demostrate good input validation
+6. The application should persist data to a SQL Server DB
+7. The application should communicate to DB via ADO.NET or Entity Framework Core
+8. The application should have unit tests
+
 My app is about tracking meal plans for people who subscribe.
 
--Models:       
--	User
-o	userId (int)
-o	username (string)
--	Meal
-o	mealSelection
-o	price
-o	datetime
--	ProteinPlus
-o	Chicken potpie
-o	Garlic Butter Steak
-o	Roasted Turkey
--	Keto
-o	Chicken Piccata
-o	Beef Stroganoff
-o	Lime Salmon
--	Carbless
-o	Cauliflower Fried Rice
-o	Coconut Grilled Chicken
-o	Egg Salad
+What I want to do:
 
-Proposal is to login as user, go into Meals, select one of them, within the selection, choose an item
+-Start with a menu - mainMenu
+ 1-New user?
+ 2-Returning user?
+ 3-Exit
+
+-Handling the user option that was selected from mainMenu
+ 1-prompt for name and generate a userId(possibly using GUID) - continue to userMenu
+ 2-prompt for name to search DB - continue to next menu
+ 3- ends app
+
+-User Menu(userMenu) -immediately if returning user selection is 2 or after userName and userId are established for new user(1)
+                       (Data validation to only enter number selection)
+ 1-Enter new meal selection
+ 2-View all previous entries
+ 3-Exit
+   1-Collect/prompt user for entry of meal selection (will store to DB) - Once entered return to 'userMenu'
+   2-Will display all prior stored meal entries including the date and price(pulled from DB) in single view or separate lines 
+        - mealSelectionMenu / mealSelectionController / mealSelectionRecordRepository -- return to userMenu - hitting enter
+   3-Will end app
+
+-Models(what we are trying to work with and store)--create separate folders to store all models .CS files by topic
+   -userProfile
+      -userId (GUID) // userid will be primary key of this table
+      -userName (string)
+
+   -mealSelectionRecord
+      -userId (GUID) - same user ID can have multiple meal selections // foreign key references the primary key(which is in userProfile)
+      -mealId (GUID) // primary key  for this table
+      -mealChoice (string)
+      -mealPrice (decimal)
+      -dateSelected (string) // should be unique
+
+Separate folders for presentation layer(menus in this case, data access layer(storing of data in the database) and controllers(any specific business logic, etc.needed)
+
+Presentation Directory
+  -mainMenu
+      -startMenu
+  -userMenu
+      -returninUserMenu
+  -mealSelectionMenu
+      -TBD
+
+Controllers Directory
+  -userProfileController
+      -createUser
+      -getReturningUser
+  -mealSelectionController
+      -createMeal
+      -retrieveMeals
+
+ Data Access Directory
+  -userRepository
+      -createUser
+      -retrieveUser
+  -mealSelectionRecordRepository
+      -createMealSelectionRecord
+      -retrieveMealSelectionRecord
+  
+Day 2 nice to haves
+-another option from userMenu to display average price, and also high and low prices (with date)
+-generate a user-friendly userId and switch the login to userId and mealId(like 1, 2, 3, 4, etc.)
+-messaging when meal price is too expensive or is not available
+-allow multiple entries fro same date(dateChecked)
+
+-Meal Selection and Price
+o	Chicken potpie          $20.00
+o	Garlic Butter Steak     $60.00
+o	Roasted Turkey          $45.00
+o	Chicken Piccata         $35.00
+o	Beef Stroganoff         $40.00
+o	Lime Salmon             $70.00
+o	Cauliflower Fried Rice  $28.00
+o	Coconut Grilled Chicken $35.00
+o	Egg Salad               $15.00
