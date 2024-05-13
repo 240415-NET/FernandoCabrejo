@@ -1,18 +1,25 @@
-using MealsProject.PresentationLayer;
+using MealsProject.PresentationLayer; //from video, here says .Models
 
 namespace MealsProject.Models
-{
+{                                   //from video corresponds to User, instead of UserProfile
     public class UserProfile
     {
-        public Guid userId { get; set; }
-        public string userName { get; set; }
 
-        public UserProfile() { } //probably don't need this
+        public Guid userId { get; set; }     //public int userId {get; private set;} = 1; then got rid of the 1
+        public string userName { get; set; } // string userName {get; set;}
+
+        public UserProfile() { } ///probably don't need this
         public UserProfile(string _userName)
         {
-            userId = Guid.NewGuid(); // Generates a new userID for the user
+            userId = Guid.NewGuid(); /// Generates a new userID for the user
             userName = _userName;
         }
-
+                                            //from video: //Constructors
+                                            //Default/No argument Constructor
+                                            //public user() {}
+                                            //This constructor takes two arguments
+                                            //public User(int _userId, string _userName){
+                                            //userId = _userId;
+                                            //userName = _userName;
     }
 }

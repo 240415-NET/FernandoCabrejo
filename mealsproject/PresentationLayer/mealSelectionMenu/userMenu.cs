@@ -6,7 +6,7 @@
 
         bool validChoice = true;
         
-        Console.WriteLine("Welcome back! Please select an option:");
+        Console.WriteLine("Welcome! Please select an option:");
         Console.WriteLine("1 Enter new meal selection");
         Console.WriteLine("2 View all previous meal selections");
         Console.WriteLine("3 Exit");
@@ -60,14 +60,6 @@
                             }
                        }
                        while (enterSecondEntree == true);
-                     //       Console.WriteLine("Enter your meal selection:");
-                      //      entreeInput = Console.ReadLine();
-                     //       if (!string.TryParse(entreeInput, out entree))
-                     //       {
-                        foreach (string item in entreeList)
-                        {
-                            Console.WriteLine(item);
-                        }
                      
                         do //nested do while loops to validate user inputs until validChoice is true at each point
                         {
@@ -83,15 +75,17 @@
                             }
                         } while (true);
 
+                        Console.WriteLine("The meals you have entered:");
+                        foreach (string item in entreeList)
+                        {
+                            Console.WriteLine(item);
+                        }
+
                         validChoice = true;
                         break;
 
                     case 2:
-                        //List<string> entreeList = new List<string>();
-                        //foreach (string item in entreeList)
-                        //{
-                        //    Console.WriteLine(item);
-                        //}
+                                                
                         Console.WriteLine("DISPLAY ALL PREVIOUS MEAL SELECTIONS HERE"); // Placeholder
                         validChoice = true; //Would like to return to the main menu or exit at this point option.
                         break;

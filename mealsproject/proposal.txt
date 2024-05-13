@@ -15,38 +15,49 @@ My app is about tracking meal plans for people who subscribe.
 What I want to do:
 
 -Start with a menu - mainMenu
- 1-New user?
- 2-Returning user?
- 3-Exit
+ 1-Check user?
+ 2-Add user?
+ 3-Delete user?
+ 4-Load Menu?
+ 5-Start?
+ 6-Exit
 
 -Handling the user option that was selected from mainMenu
- 1-prompt for name and generate a userId(possibly using GUID) - continue to userMenu
- 2-prompt for name to search DB - continue to next menu
- 3- ends app
+ 1-prompt to enter a user name
+ 2-generate a userId(possibly using GUID) - go back to mainMenu
+ 3-search for the name to see if existing already
+ 4-present a user menu
+ 5-Exit
 
--User Menu(userMenu) -immediately if returning user selection is 2 or after userName and userId are established for new user(1)
-                       (Data validation to only enter number selection)
- 1-Enter new meal selection
- 2-View all previous entries
- 3-Exit
+-User Menu(userMenu) -Data validation to only enter number selection
+ 1-Load Menu
+ 2-Choose Items
+ 3-Display History
+ 4-Go back
+ 5-Exit
    1-Collect/prompt user for entry of meal selection (will store to DB) - Once entered return to 'userMenu'
-   2-Will display all prior stored meal entries including the date and price(pulled from DB) in single view or separate lines 
-        - mealSelectionMenu / mealSelectionController / mealSelectionRecordRepository -- return to userMenu - hitting enter
+   2-Will display all prior stored meal entries including the date entered and price in single view 
+        - mealSelectionMenu / mealSelectionController / mealSelectionRecordRepository -- return to userMenu - hitting number for Exit
    3-Will end app
 
 -Models(what we are trying to work with and store)--create separate folders to store all models .CS files by topic
    -userProfile
       -userId (GUID) // userid will be primary key of this table
       -userName (string)
+   -Menu
+   -History
+   -Response
+   -Session
+      -to keep track of user profile in json
 
    -mealSelectionRecord
       -userId (GUID) - same user ID can have multiple meal selections // foreign key references the primary key(which is in userProfile)
       -mealId (GUID) // primary key  for this table
       -mealChoice (string)
       -mealPrice (decimal)
-      -dateSelected (string) // should be unique
+      -dateEntered (string) // should be unique and current date no future dates
 
-Separate folders for presentation layer(menus in this case, data access layer(storing of data in the database) and controllers(any specific business logic, etc.needed)
+Separate folders for presentation layer (menus in this case, data access layer(storing of data in the database) and controllers(any specific business logic, etc.needed)
 
 Presentation Directory
   -mainMenu
@@ -60,23 +71,28 @@ Controllers Directory
   -userProfileController
       -createUser
       -getReturningUser
-  -mealSelectionController
+  -MenuController
       -createMeal
       -retrieveMeals
+  -HistoryController
+      -historyrepository
+      -addtohistory
 
  Data Access Directory
   -userRepository
       -createUser
       -retrieveUser
-  -mealSelectionRecordRepository
+  -menuRepository
       -createMealSelectionRecord
       -retrieveMealSelectionRecord
+  -historyrepository
+      -interactwithjson
   
 Day 2 nice to haves
 -another option from userMenu to display average price, and also high and low prices (with date)
 -generate a user-friendly userId and switch the login to userId and mealId(like 1, 2, 3, 4, etc.)
 -messaging when meal price is too expensive or is not available
--allow multiple entries fro same date(dateChecked)
+-allow multiple entries for same date(dateChecked)
 
 -Meal Selection and Price
 o	Chicken potpie          $20.00
@@ -101,7 +117,7 @@ Roadmap:
     2.userProfile.cs             --entered 5/8/24
 -ControllersLayer
     1.mealSelectionController.cs --entered 5/8/24
-    2.userProfielController.cs   --entered 5/8/24
+    2.userProfileController.cs   --entered 5/8/24
 -DataAccessLayer
     1.mealRecordReposity.cs      --entered 5/8/24
     2.userRepository.cs          --entered 5/8/24

@@ -6,4 +6,9 @@ namespace MealsProject.DataAccessLayer;
         {
 
         }
+
+        public static void saveMealRecord()
+        {
+            
+        }
     }
