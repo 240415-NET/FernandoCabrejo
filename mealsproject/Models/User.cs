@@ -7,6 +7,7 @@ namespace MealsProject.Models
     using System.Text;
     using System.Threading.Tasks;
 
+// random comment
     internal class User
     {
         public User([NotNull] string userName)
