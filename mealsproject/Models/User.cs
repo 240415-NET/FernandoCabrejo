@@ -1,3 +1,26 @@
+namespace MealsProject.Models
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    internal class User
+    {
+        public User([NotNull] string userName)
+        {
+            this.UserName = userName;
+        }
+
+        public int Id { get; set; }
+
+        public string UserName { get; set; }
+    }
+}
+
+/*
 using MealsProject.PresentationLayer; //from video, here says .Models
 
 namespace MealsProject.Models
@@ -23,3 +46,4 @@ namespace MealsProject.Models
                                             //userName = _userName;
     }
 }
+*/

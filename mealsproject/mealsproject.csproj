@@ -8,4 +8,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+   <ItemGroup>
+      <None Update="Resources\History.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\Menu.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Resources\User.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+  </ItemGroup>
+
 </Project>

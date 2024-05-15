@@ -1,0 +1,53 @@
+[
+    {
+      "Id": 1,
+      "ItemName": "Chicken Piccata",
+      "Price": 35.00
+    },
+    {
+      "Id": 2,
+      "ItemName": "Lasagna",
+      "Price": 30.00
+    },
+    {
+      "Id": 3,
+      "ItemName": "Beef Stroganoff",
+      "Price": 40.00
+    },
+    {
+      "Id": 4,
+      "ItemName": "Chicken Potpie",
+      "Price": 20.00
+    },
+    {
+      "Id": 5,
+      "ItemName": "Garlic Butter Steak",
+      "Price": 60.00
+    },
+    {
+      "Id": 6,
+      "ItemName": "Roasted Turkey",
+      "Price": 45.00
+    },
+    {
+      "Id": 7,
+      "ItemName": "Lime Sea Bass",
+      "Price": 70.00
+    },
+    {
+      "Id": 8,
+      "ItemName": "Egg Salad",
+      "Price": 15.00
+    },
+    {
+      "Id": 9,
+      "ItemName": "Cauliflower Fried Rice",
+      "Price": 28.00
+    },
+    {
+        "Id": 10,
+        "ItemName": "Coconut Grilled Chicken",
+        "Price": 35.00
+    }
+]
+  

@@ -1,13 +1,39 @@
-namespace MealsProject.DataAccessLayer;
+namespace MealsProject.DataAccessLayer
+{
+    using System.Linq;
+    using MealsProject.Models;
 
-    public class UserRepository
+    internal class UserRepository : BaseRepository<User>
     {
-        public static void createUser()
-        {
+        int _currentId;
 
+        public UserRepository(): base ($"Resources/User.json")
+        {
+            this._currentId = this._entries.Max(x => x.Id);
         }
-        public static void retrieveUser()
-        {
 
+        public new User Add(User user)
+        {
+            user.Id = ++this._currentId;
+            base.Add(user);
+            return user;
+        }
+
+        public new bool Delete (User user)
+        {
+            var deleteUser = this._entries.SingleOrDefault(x=>x.UserName == user.UserName);
+            if (deleteUser != null)
+            {
+                base.Delete(deleteUser);
+            }
+
+            return true;
+        }
+
+        public override User? Get(int id)
+        {
+            var user = this._entries.FirstOrDefault(user => user.Id == id);
+            return user;
         }
     }
+}

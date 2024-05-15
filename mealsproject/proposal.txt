@@ -1,14 +1,14 @@
 MealsProject
 Requirements:
 
-1. The application should be a C# Console Application
+1. The application should be a C# Console Application  
 2. The application should build and run
 3. The application should interact with users and provide some console UI
 4. The application should allow for multiple users to log in and persist their data
 5. The application should demostrate good input validation
 6. The application should persist data to a SQL Server DB
 7. The application should communicate to DB via ADO.NET or Entity Framework Core
-8. The application should have unit tests
+
 
 My app is about tracking meal plans for people who subscribe.
 
@@ -65,7 +65,8 @@ Presentation Directory
   -userMenu
       -returninUserMenu
   -mealSelectionMenu
-      -TBD
+      -mealChoice with price
+      -date meal entered
 
 Controllers Directory
   -userProfileController
@@ -89,6 +90,7 @@ Controllers Directory
       -interactwithjson
   
 Day 2 nice to haves
+8. The application should have unit tests //changed on 5/14/24
 -another option from userMenu to display average price, and also high and low prices (with date)
 -generate a user-friendly userId and switch the login to userId and mealId(like 1, 2, 3, 4, etc.)
 -messaging when meal price is too expensive or is not available
@@ -117,7 +119,10 @@ Roadmap:
     2.userProfile.cs             --entered 5/8/24
 -ControllersLayer
     1.mealSelectionController.cs --entered 5/8/24
+      changed to MenuController.cs-entered 5/13/24
     2.userProfileController.cs   --entered 5/8/24
+      changed to UserController.cs-entered 5/13/24
+    3.HistoryController.cs       --entered 5/13/24
 -DataAccessLayer
     1.mealRecordReposity.cs      --entered 5/8/24
     2.userRepository.cs          --entered 5/8/24

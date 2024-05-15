@@ -1,3 +1,16 @@
+namespace MealsProject.Models
+{
+    internal class Menu
+    {
+        public int Id {get; set; }
+
+        public required string ItemName { get; set; }
+
+        public decimal Price { get; set; }
+    }
+}
+
+/*
 namespace MealsProject.Models;
 
     public class MealSelectionRecord             //from video: public class Item
@@ -10,3 +23,4 @@ namespace MealsProject.Models;
                                                  // *also added from pet a no argument constructor*
                                                  // public Item() {}
     }
+*/
