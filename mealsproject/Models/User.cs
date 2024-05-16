@@ -7,7 +7,7 @@ namespace MealsProject.Models
     using System.Text;
     using System.Threading.Tasks;
 
-// random comment
+
     internal class User
     {
         public User([NotNull] string userName)
@@ -18,6 +18,9 @@ namespace MealsProject.Models
         public int Id { get; set; }
 
         public string UserName { get; set; }
+        public string Password { get; set; }
+
+    //    public bool IsLoggedIn { get; set; }
     }
 }
 

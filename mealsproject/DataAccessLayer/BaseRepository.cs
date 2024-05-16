@@ -10,7 +10,7 @@ namespace MealsProject.DataAccessLayer
 
         protected List<T> _entries = [];
 
-        public BaseRepository(string filename)
+        public BaseRepository(string filename)    //constructor for filename
         {
             this._jsonOperator = new JsonOperator(filename);
             this.Refresh();

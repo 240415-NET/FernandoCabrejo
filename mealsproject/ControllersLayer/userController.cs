@@ -35,6 +35,33 @@ internal class UserController
         return response;
     }
 
+    public Response ValidateUserByNameAndPassword(string username, string password)
+    {
+        var response = new Response();
+        try
+        {
+            var users = this._userRepository.GetAll();
+            var user = users.FirstOrDefault(x => string.Equals(x.UserName, username, StringComparison.OrdinalIgnoreCase)&&
+                                                 string.Equals(x.Password, password, StringComparison.OrdinalIgnoreCase));
+            if (user == null)
+            {
+                throw new InvalidDataException("Invalid User Name or Password");
+            }
+          //  user.IsLoggedIn = true;
+          //  this._userRepository.Update(user);
+            response.ObjectResponse = user;
+            response.Message = $"User {user.UserName} Logged In!";
+        }
+
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+        }
+
+        return response;
+    }
+
     // Add user needs to include password
     public Response AddUser(string username)
     {

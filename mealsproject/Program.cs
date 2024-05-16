@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using System.ComponentModel;
+using System.Reflection.Emit;
 using MealsProject.ControllersLayer;
 using MealsProject.Models;
 
@@ -10,106 +11,140 @@ class Program
     static Session? session;
     static void Main(string[] args)
 
-    {  
+    {
         Console.WriteLine("****************************************");
         Console.WriteLine("* Welcome to the Meals Ordering System *");
         Console.WriteLine("****************************************");
-
         do
         {
-            DisplayOptions(1);
-            var option = TakeInputWithMessage("what would you like to do next? Enter Option:");
+            var userIn = TakeInputWithMessage("Enter your user name:");
+            var userPw = TakeInputWithMessage("Enter your password:");
+            var userResponse = userController.ValidateUserByNameAndPassword(userIn, userPw); //have to cast response to user
+            var user = (User)userResponse.ObjectResponse;
 
-            switch (option)
+            if (userResponse.Success && user != null)
             {
-                case "1":
-                // Login Case
-                // You have username, need password
-                    var username = TakeInputWithMessage("Input Username:");
-                    var userResponse = userController.GetUserByName(username);
-                    // Do some kind of conditional check on the password
-                    Console.WriteLine(userResponse.Message);    //how to change Console.WriteLine to Output
-                    break;
-                case "2":
-                // Register Case
-                    var addUsername = TakeInputWithMessage("Input Username to Add:");
-                    var addUserResponse = userController.AddUser(addUsername);
-                    Console.WriteLine(addUserResponse.Message);  //how to change Console.WriteLine to Output
-                    break;
-                case "3":
-                // Should only be possible after the user has logged in
-                // Unless you create some kind of admin user, but the adminshould still login
-                    var deleteUsername = TakeInputWithMessage("Input Username to Delete:");
-                    var deleteUserResponse = userController.DeleteUser(deleteUsername);
-                    Console.WriteLine(deleteUserResponse.Message);  //how to change Console.WriteLine to Output
-                    break;
-                case "4":
-                    DisplayMenu();
-                    break;
-                case "5":
-                    TakeOrder();
-                    break;
-                case "6":
-                    Console.WriteLine("Thanks for using the Meal Ordering System");
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("Invalid Input");
-                    break;
-            }
-        } while (true);
-    }
 
-    // If a user has already logged in, do you need to ask them for their username again?
-    private static void TakeOrder()
-    {
-        var loadUsername = TakeInputWithMessage("Load Username:");
-        var loadUserResponse = userController.GetUserByName(loadUsername);
-        Console.WriteLine(loadUserResponse.Message);
-        if (loadUserResponse.Success)
-        {
-            var loadedUser = (User)loadUserResponse.ObjectResponse;
-            session = new Session(loadedUser);
-            Console.WriteLine($"{loadUsername} is successfully loaded in the session");
+                DisplayOptions(1);
+                var option = TakeInputWithMessage("what would you like to do next? Enter Option:");
 
-            var goBack = false;
-            do{
-                DisplayOptions(2);
-                var option = TakeInputWithMessage("What would you like to do next? Enter Option:");
                 switch (option)
                 {
                     case "1":
                         DisplayMenu();
                         break;
                     case "2":
-                        ChooseItems();
+                        ChooseItems(user);
                         break;
                     case "3":
-                        DisplayHistoryForSessionUser();
+                        DisplayHistoryForSessionUser(user);
                         break;
                     case "4":
-                        goBack=true;
+                        Console.WriteLine("Thanks for using the Meal Ordering System");
                         ClearSession();
-                        break;
-                    case "5":
-                        Console.WriteLine("Thanks for using the system!");
                         Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Invalid Input");
                         break;
+
+                        /*
+                        case "1":
+                            // Login Case
+                            // You have username, need password
+                            var username = TakeInputWithMessage("Input Username:");
+                            var userResponse = userController.GetUserByName(username);
+                            // Do some kind of conditional check on the password
+                            Console.WriteLine(userResponse.Message);    //how to change Console.WriteLine to Output
+                            break;
+                        case "2":
+                            // Register Case
+                            var addUsername = TakeInputWithMessage("Input Username to Add:");
+                            var addUserResponse = userController.AddUser(addUsername);
+                            Console.WriteLine(addUserResponse.Message);  //how to change Console.WriteLine to Output
+                            break;
+                        case "3":
+                            // Should only be possible after the user has logged in
+                            // Unless you create some kind of admin user, but the adminshould still login
+                            var deleteUsername = TakeInputWithMessage("Input Username to Delete:");
+                            var deleteUserResponse = userController.DeleteUser(deleteUsername);
+                            Console.WriteLine(deleteUserResponse.Message);  //how to change Console.WriteLine to Output
+                            break;
+                        case "1":
+                            DisplayMenu();
+                            break;
+                        case "2":
+                            TakeOrder(user);
+                            break;
+                        case "3":
+                            Console.WriteLine("Thanks for using the Meal Ordering System");
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("Invalid Input");
+                            break;
+                        */
                 }
-            } while (!goBack || session != null);
-        }
-        else
-        {
-            Console.WriteLine($"{loadUsername} could not be loaded in the session");
-        }
+            }
+            else
+            {
+                Console.WriteLine(userResponse.Message);
+            }
+        } while (true);
     }
 
-    private static void ChooseItems()
+    // If a user has already logged in, do you need to ask them for their username again?
+    private static void TakeOrder(User user)
+    {
+        // var loadUsername = TakeInputWithMessage("Load Username:");
+        // var loadUserResponse = userController.GetUserByName(loadUsername);
+        // Console.WriteLine(loadUserResponse.Message);
+        // if (loadUserResponse.Success)
+        // {
+        //     var loadedUser = (User)loadUserResponse.ObjectResponse;
+        session = new Session(user);
+        // Console.WriteLine($"{loadUsername} is successfully loaded in the session");
+
+        var goBack = false;
+        do
+        {
+            DisplayOptions(2);
+            var option = TakeInputWithMessage("What would you like to do next? Enter Option:");
+            switch (option)
+            {
+                case "1":
+                    DisplayMenu();
+                    break;
+                case "2":
+                    ChooseItems(user);
+                    break;
+                case "3":
+                    DisplayHistoryForSessionUser(user);
+                    break;
+                case "4":
+                    goBack = true;
+                    ClearSession();
+                    break;
+                case "5":
+                    Console.WriteLine("Thanks for using the system!");
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid Input");
+                    break;
+            }
+        } while (!goBack || session != null);
+        //  }
+        //  else
+        //  {
+        //      Console.WriteLine($"{loadUsername} could not be loaded in the session");
+        //  }
+    }
+
+    private static void ChooseItems(User user)
     {
         DisplayMenu();
+        session = new Session(user);
         do
         {
             var menuItemNumber = TakeInputWithMessage("Enter Menu Item Number:");
@@ -132,7 +167,7 @@ class Program
         Console.WriteLine("*********************************");
         Console.WriteLine("          * M E N U *            ");
         Console.WriteLine("*********************************");
-        var menuResponse = menuController.GetAllMenuItems();   
+        var menuResponse = menuController.GetAllMenuItems();
         var menuItems = menuResponse.ObjectResponse as List<Menu>;
 
         foreach (var item in menuItems)
@@ -147,18 +182,18 @@ class Program
         session = null;
     }
 
-    private static void DisplayHistoryForSessionUser()
+    private static void DisplayHistoryForSessionUser(User user)   //using parameter user
     {
         Console.WriteLine(Environment.NewLine);
         Console.WriteLine("*********************************");
         Console.WriteLine("          * History *            ");
         Console.WriteLine("*********************************");
-        var historyResponse = historyController.GetAllHistoryForUser(session.User.Id);
+        var historyResponse = historyController.GetAllHistoryForUser(user.Id);
 
         var histories = (List<History>)historyResponse.ObjectResponse;
         if (!histories.Any())
         {
-            Console.WriteLine($"No history found for user {session.User.UserName}");            
+            Console.WriteLine($"No history found for user {user.UserName}");
         }
 
         foreach (var history in histories)
@@ -173,12 +208,12 @@ class Program
 
             Console.WriteLine("--------------------------\r\n");
         }
-            Console.WriteLine("-------History Complete--------");
+        Console.WriteLine("-------History Complete--------");
     }
 
     private static void WriteHistoryFromSession()
     {
-        if(ClearSession == null)
+        if (ClearSession == null)
         {
             Console.WriteLine("No user is loaded");
             return;
@@ -189,7 +224,7 @@ class Program
         var history = new History
         {
             Date = dateTime.ToString(),
-            ItemNumbers = session.OrderList.Select(x=>x.Id).ToList(),
+            ItemNumbers = session.OrderList.Select(x => x.Id).ToList(),
             UserId = session.User.Id
         };
         historyController.AddHistory(history);
@@ -198,17 +233,17 @@ class Program
     // This is a private static method that takes in a message and returns the input of the user after displaying the message given
     private static string TakeInputWithMessage(string Message)
     {
-        Console.WriteLine(Message,false);
+        Console.WriteLine(Message, false);
         var input = Console.ReadLine();
         while (string.IsNullOrWhiteSpace(input))
         {
-            Console.WriteLine("Input cannot be empty, Re-enter please:",false);
+            Console.WriteLine("Input cannot be empty, Re-enter please:", false);
             input = Console.ReadLine();
         }
         return input;
     }
 
-    private static void Outpu(string message, bool tab=true)
+    private static void Outpu(string message, bool tab = true)
     {
         var tabstr = tab ? "\t" : string.Empty;
         Console.WriteLine($"{tabstr}{message}");
@@ -222,11 +257,11 @@ class Program
         Console.WriteLine("*********************************");
         switch (level)
         {
+            //case 1:
+            //    Console.WriteLine("1.View Menu    2.Place Order    3.Exit \r\n");
+            //    break;
             case 1:
-                Console.WriteLine("1.Check User    2.Add User    3.Delete User    4.Load Menu    5.Start    6.Exit \r\n");
-                break;
-            case 2:
-                Console.WriteLine("1.Load Menu    2.Choose Items    3.Display History    4.Go Back    5.Exit \r\n");
+                Console.WriteLine("1.View Menu    2.Place Order    3.View History    4.Log out \r\n");
                 break;
             default:
                 Console.WriteLine("Invalid Entry");

@@ -19,6 +19,12 @@ namespace MealsProject.DataAccessLayer
             return user;
         }
 
+        //public void Update(User user)
+        //{
+        //    Delete(user);
+        //    Add(user);
+        //}
+
         public new bool Delete (User user)
         {
             var deleteUser = this._entries.SingleOrDefault(x=>x.UserName == user.UserName);
