@@ -12,23 +12,23 @@ class Program
     static void Main(string[] args)
 
     {
-        Console.WriteLine("****************************************");
-        Console.WriteLine("* Welcome to the Meals Ordering System *");
-        Console.WriteLine("****************************************");
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        Console.WriteLine("~   Welcome to the Meals App Project   ~");
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         do
         {
-            var userIn = TakeInputWithMessage("Enter your user name:");
-            var userPw = TakeInputWithMessage("Enter your password:");
-            var userResponse = userController.ValidateUserByNameAndPassword(userIn, userPw); //have to cast response to user
+            var userIn = TakeInputWithMessage("Enter your user name:");                      //Using method to get a string name
+            var userPw = TakeInputWithMessage("Enter your password:");                       //Using same method to get a string for password
+            var userResponse = userController.ValidateUserByNameAndPassword(userIn, userPw); //Casting response to user controller to validate
             var user = (User)userResponse.ObjectResponse;
 
             if (userResponse.Success && user != null)
             {
 
-                DisplayOptions(1);
-                var option = TakeInputWithMessage("what would you like to do next? Enter Option:");
+                DisplayOptions(1);                                                           //To see the options to select, at the bottom of this prog
+                var option = TakeInputWithMessage("what would you like to do next? Enter Option:"); //method to get input
 
-                switch (option)
+                switch (option)                                   //switch evaluates the number entered in option to the case number
                 {
                     case "1":
                         DisplayMenu();
@@ -40,12 +40,12 @@ class Program
                         DisplayHistoryForSessionUser(user);
                         break;
                     case "4":
-                        Console.WriteLine("Thanks for using the Meal Ordering System");
+                        Console.WriteLine("Thanks for using the Meal App Project");
                         ClearSession();
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Invalid Input");
+                        Console.WriteLine("Invalid Option... Try Again");
                         break;
 
                         /*
@@ -96,7 +96,7 @@ class Program
     // If a user has already logged in, do you need to ask them for their username again?
     private static void TakeOrder(User user)
     {
-        // var loadUsername = TakeInputWithMessage("Load Username:");
+        // var loadUsername = TakeInputWithMessage("Load Username:");         //Removing this code to not ask their username again
         // var loadUserResponse = userController.GetUserByName(loadUsername);
         // Console.WriteLine(loadUserResponse.Message);
         // if (loadUserResponse.Success)
@@ -113,24 +113,24 @@ class Program
             switch (option)
             {
                 case "1":
-                    DisplayMenu();
+                    DisplayMenu();                                           //Method to display the menu
                     break;
                 case "2":
-                    ChooseItems(user);
+                    ChooseItems(user);                                       //Method to enter menu item
                     break;
                 case "3":
-                    DisplayHistoryForSessionUser(user);
+                    DisplayHistoryForSessionUser(user);                      //Method to see history for specific user
                     break;
                 case "4":
                     goBack = true;
-                    ClearSession();
+                    ClearSession();                                          //Method to null the session 
                     break;
                 case "5":
-                    Console.WriteLine("Thanks for using the system!");
-                    Environment.Exit(0);
+                    Console.WriteLine("Thanks for using the meals app!");
+                    Environment.Exit(0);                                     //Found this method that terminates the current process passing 0 as successful
                     break;
                 default:
-                    Console.WriteLine("Invalid Input");
+                    Console.WriteLine("Invalid Option, Good Bye");
                     break;
             }
         } while (!goBack || session != null);
@@ -156,17 +156,17 @@ class Program
         Console.WriteLine($"Total Amount: ${session.OrderList.Sum(o => o.Price)}");
         if (TakeInputWithMessage("Place Order? (Y/N)").ToUpper() == "Y")
         {
-            Console.WriteLine($"Order Placed Successfully");
+            Console.WriteLine($"Order Placed Successfully, Good Bye");
             WriteHistoryFromSession();
         }
     }
 
-    private static void DisplayMenu()
-    {
-        Console.WriteLine(Environment.NewLine);
-        Console.WriteLine("*********************************");
+    private static void DisplayMenu()                    //Static means the method DisplayMenu belongs to the program class and not an object of the program class.
+    {                                                    //Void menas that the method does not have a return value.
+        Console.WriteLine(Environment.NewLine);          //this is a property that adds a new line to a string
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         Console.WriteLine("          * M E N U *            ");
-        Console.WriteLine("*********************************");
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         var menuResponse = menuController.GetAllMenuItems();
         var menuItems = menuResponse.ObjectResponse as List<Menu>;
 
@@ -185,9 +185,9 @@ class Program
     private static void DisplayHistoryForSessionUser(User user)   //using parameter user
     {
         Console.WriteLine(Environment.NewLine);
-        Console.WriteLine("*********************************");
-        Console.WriteLine("          * History *            ");
-        Console.WriteLine("*********************************");
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        Console.WriteLine("       * H i S T O R Y*          ");
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         var historyResponse = historyController.GetAllHistoryForUser(user.Id);
 
         var histories = (List<History>)historyResponse.ObjectResponse;
@@ -249,12 +249,12 @@ class Program
         Console.WriteLine($"{tabstr}{message}");
     }
 
-    private static void DisplayOptions(int level)
+    private static void DisplayOptions(int level)                      //See the options from start of program
     {
         Console.WriteLine(Environment.NewLine);
-        Console.WriteLine("*********************************");
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         Console.WriteLine("  Available Operation Options:   ");
-        Console.WriteLine("*********************************");
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         switch (level)
         {
             //case 1:
@@ -264,11 +264,11 @@ class Program
                 Console.WriteLine("1.View Menu    2.Place Order    3.View History    4.Log out \r\n");
                 break;
             default:
-                Console.WriteLine("Invalid Entry");
+                Console.WriteLine("Invalid Option");
                 break;
         }
 
-        Console.WriteLine("*********************************");
+        Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 }
 

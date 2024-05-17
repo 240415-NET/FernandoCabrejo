@@ -10,7 +10,7 @@ namespace MealsProject.DataAccessLayer
 
         protected List<T> _entries = [];
 
-        public BaseRepository(string filename)    //constructor for filename
+        public BaseRepository(string filename)    //Constructor for filename
         {
             this._jsonOperator = new JsonOperator(filename);
             this.Refresh();
@@ -21,9 +21,9 @@ namespace MealsProject.DataAccessLayer
             this._entries = this.GetAll().ToList();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll()           //Base interface for all non-generic collections
         {
-            var json = _jsonOperator.ReadFromJson();
+            var json = _jsonOperator.ReadFromJson();     //The operator is to read from json
             var entries = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<T>>(json);
 
             return entries;
@@ -33,7 +33,7 @@ namespace MealsProject.DataAccessLayer
 
         public bool Add(T entity)
         {
-            this._entries.Add(entity);
+            this._entries.Add(entity);                 //The operator is to add to json
             this._jsonOperator.WriteToJson(this._entries);
             this.Refresh();
             return true;

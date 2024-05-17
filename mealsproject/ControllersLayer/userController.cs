@@ -35,6 +35,7 @@ internal class UserController
         return response;
     }
 
+    //Added this code to validate the user name and password entered
     public Response ValidateUserByNameAndPassword(string username, string password)
     {
         var response = new Response();
@@ -62,7 +63,7 @@ internal class UserController
         return response;
     }
 
-    // Add user needs to include password
+    // Add user functionality needs to include password, removed when I changed on 5/15 to include a string password
     public Response AddUser(string username)
     {
         var response = new Response();
