@@ -5,7 +5,34 @@ namespace MealsProject.DataAccessLayer
     using MealsProject.Models;
     
 
-    public class MenuRepository                                                                                       // taking out ': BaseRepository<User>'          
+    
+         internal class MenuRepository : BaseRepository<Menu>       //all go to BaseRepository
+    {
+        int _currentId;
+        public MenuRepository() : base("Resources/Menu.json")
+        {
+           this._currentId = this._entries.Max(x => x.Id);
+        }
+
+        public new Menu Add(Menu menu)
+        {
+            menu.Id = ++this._currentId;
+            base.Add(menu);
+            return menu;
+        }
+
+        public override Menu?   Get(int id)
+        {
+            var menu = this._entries.FirstOrDefault(menu => menu.Id == id);
+            return menu;
+        }
+    }
+}
+
+
+
+/*
+public class MenuRepository                                                                                       // taking out ': BaseRepository<User>'          
     {
         public static string connectionPath = @"C:\Users\U1H007\Revature Engineer Bootcamp\FernandoCabrejo\mealsproject\ConnectionStringMealsProject.txt";
 
@@ -36,31 +63,5 @@ namespace MealsProject.DataAccessLayer
 
         } 
     }
-}
 
-
-
-/* code removed to use SQL
-         internal class MenuRepository : BaseRepository<Menu>       //all go to BaseRepository
-    {
-        int _currentId;
-       // public MenuRepository() : base("Resources/Menu.json")
-       // {
-        //    this._currentId = this._entries.Max(x => x.Id);
-        //}
-
-        public new Menu Add(Menu menu)
-        {
-            menu.Id = ++this._currentId;
-            base.Add(menu);
-            return menu;
-        }
-
-        public override Menu?   Get(int id)
-        {
-            var menu = this._entries.FirstOrDefault(menu => menu.Id == id);
-            return menu;
-        }
-    }
-}
 */

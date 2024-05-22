@@ -5,7 +5,7 @@ namespace MealsProject.DataAccessLayer
     using MealsProject.Utils;
     using System.Data.Common;
     using System.Reflection.Metadata;
-/*
+
     internal abstract class BaseRepository<T> where T : class
     {
 
@@ -63,5 +63,5 @@ namespace MealsProject.DataAccessLayer
             return true;
         }
     }
-*/
+
 }
