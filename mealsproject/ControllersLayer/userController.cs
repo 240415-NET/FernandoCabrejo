@@ -27,13 +27,13 @@ namespace MealsProject.ControllersLayer
             return existingUser;
         }
 
+    }
 
 
 
 
 
-
-
+/* Code used previously with json
         public UserController()
         {
             this._userRepository = new UserRepository();
@@ -91,3 +91,4 @@ namespace MealsProject.ControllersLayer
         }
     }
 }
+*/
