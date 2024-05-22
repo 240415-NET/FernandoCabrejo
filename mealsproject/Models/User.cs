@@ -7,7 +7,7 @@ namespace MealsProject.Models
     using System.Text;
     using System.Threading.Tasks;
 
-    internal class User
+    public class User
     {
         public User([NotNull] string userName)
         {

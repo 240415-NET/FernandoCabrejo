@@ -12,6 +12,11 @@ internal class UserController
         this._userRepository = new UserRepository();
     }
 
+    public static User retrieveStoredUser(string userName)
+    {
+        return UserSQL.RetrieveStoredUser(userName);
+    }
+
     public Response GetUserByName(string username)
     {
         var response = new Response();

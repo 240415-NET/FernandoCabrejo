@@ -26,7 +26,7 @@ class Program
                 // Login Case
                 // You have username, need password
                     var username = TakeInputWithMessage("Input Username:");
-                    var userResponse = userController.GetUserByName(username);
+                    var userResponse = userController.retrieveStoredUser(username);
                     // Do some kind of conditional check on the password
                     Console.WriteLine(userResponse.Message);    //how to change Console.WriteLine to Output
                     break;
