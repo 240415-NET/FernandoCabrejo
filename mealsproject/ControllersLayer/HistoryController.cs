@@ -5,7 +5,7 @@ namespace MealsProject.ControllersLayer
 
     internal class HistoryController
     {
-        private readonly HistoryRepository _historyRepository;
+        private readonly HistoryRepository _historyRepository;          //communicates with historyRepository
 
         public HistoryController()
         {
@@ -18,7 +18,7 @@ namespace MealsProject.ControllersLayer
 
             try
             {
-                var histories = this._historyRepository.GetAll().Where(HistoryController => HistoryController.UserId == userId).ToList();
+                var histories = this._historyRepository.GetAll().Where(HistoryController => HistoryController.UserId == userId).ToList();   //changing GetAll to Get
                 response.ObjectResponse = histories;
             }
             catch (Exception ex)

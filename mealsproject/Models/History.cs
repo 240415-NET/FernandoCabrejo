@@ -1,7 +1,7 @@
 namespace MealsProject.Models
 {
 
-    internal class History
+    public class History
     {
         public int Id { get; set; }
 

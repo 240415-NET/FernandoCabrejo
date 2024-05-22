@@ -1,6 +1,5 @@
-namespace MealsProject.Models
-{
-    using System;
+namespace MealsProject.Models;
+
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
@@ -8,21 +7,23 @@ namespace MealsProject.Models
     using System.Threading.Tasks;
 
 
-    internal class User
+    public class User
     {
-        public User([NotNull] string userName)
-        {
-            this.UserName = userName;
-        }
-
         public int Id { get; set; }
 
         public string UserName { get; set; }
         public string Password { get; set; }
 
+        public User([NotNull] string userName)                    //Constructor
+        {
+            this.UserName = userName;
+        }
+
+        public User(){}
+
     //    public bool IsLoggedIn { get; set; }
     }
-}
+
 
 /*
 using MealsProject.PresentationLayer; //from video, here says .Models

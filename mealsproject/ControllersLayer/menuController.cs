@@ -5,7 +5,7 @@ namespace MealsProject.ControllersLayer
 
     internal class MenuController
     {
-        private readonly MenuRepository _menuRepository;
+        private readonly MenuRepository _menuRepository;                //communicates with menuRepository
 
         public MenuController()
         {

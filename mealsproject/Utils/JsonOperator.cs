@@ -1,6 +1,6 @@
 namespace MealsProject.Utils
 {
-    internal class JsonOperator
+    internal class JsonOperator                //internal class accessible only within files in the same assembly
     {
         private readonly string _filename;
         public JsonOperator(string fileName) 

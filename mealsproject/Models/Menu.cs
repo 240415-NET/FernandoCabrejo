@@ -1,6 +1,6 @@
 namespace MealsProject.Models
 {
-    internal class Menu
+    public class Menu
     {
         public int Id {get; set; }
 
