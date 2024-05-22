@@ -21,6 +21,8 @@ namespace MealsProject.DataAccessLayer
             try
             {
                 var users = RetrieveStoredUser(username);
+                Console.WriteLine(users.UserName);
+                Console.WriteLine(users.Password);
                 //var user = users.FirstOrDefault(x => string.Equals(x.UserName, username, StringComparison.OrdinalIgnoreCase) &&
                 //                                     string.Equals(x.Password, password, StringComparison.OrdinalIgnoreCase));
                 if (users == null)
@@ -68,10 +70,11 @@ namespace MealsProject.DataAccessLayer
 
                         while (mealsReader.Read())
                         {
-                            existingUser.Id = mealsReader.GetInt32(0);
+                            existingUser.Id = int.Parse(mealsReader.GetString(0));
                             string Password = mealsReader.GetString(1);
                             string userName = mealsReader.GetString(2);
                             existingUser.UserName = userName;
+                            existingUser.Password = Password;
                         }
                         myConnectionObject.Close();
                     }
