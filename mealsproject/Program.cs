@@ -19,7 +19,7 @@ class Program
         {
             var userIn = TakeInputWithMessage("Enter your user name:");                      //Using method to get a string name
             var userPw = TakeInputWithMessage("Enter your password:");                       //Using same method to get a string for password
-            var userResponse = userController.ValidateUserByNameAndPassword(userIn, userPw); //Casting response to user controller to validate
+            var userResponse = UserController.ValidateUserByNameAndPassword(userIn, userPw); //Casting response to user controller to validate
             var user = (User)userResponse.ObjectResponse;
 
             if (userResponse.Success && user != null)

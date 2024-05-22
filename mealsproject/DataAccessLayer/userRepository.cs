@@ -15,46 +15,81 @@ namespace MealsProject.DataAccessLayer
 
         int _currentId;
 
-        public User RetrieveStoredUser(string userNameToFind)
+        public static Response ValidateUserByNameAndPassword(string username, string password)
         {
-            User existingUser = new User("User name not found");
+            var response = new Response();
             try
             {
-                using SqlConnection myConnectionObject = new SqlConnection(connectionString);                                        //had (this.  before
-                myConnectionObject.Open();                                                                                 
-                
-                string SQLCodeToRetrieveUser = @"SELECT userId, userPassword, userName FROM MealsUsers WHERE userName = @userName";  //create parametized string
-
-                using SqlCommand RetrieveUserCommand = new SqlCommand(SQLCodeToRetrieveUser, myConnectionObject);                             //Query results, use this connection and run this query
-
-                RetrieveUserCommand.Parameters.AddWithValue("@userName", userNameToFind);                                
-
-                using SqlDataReader mealsReader = RetrieveUserCommand.ExecuteReader();
-
-                while (mealsReader.Read())
+                var users = RetrieveStoredUser(username);
+                //var user = users.FirstOrDefault(x => string.Equals(x.UserName, username, StringComparison.OrdinalIgnoreCase) &&
+                //                                     string.Equals(x.Password, password, StringComparison.OrdinalIgnoreCase));
+                if (users == null)
                 {
-                    existingUser.Id = mealsReader.GetInt32(0);
-                    string Password = mealsReader.GetString(1);
-                    string userName = mealsReader.GetString(2);
-                    existingUser.UserName = userName;
+                    throw new InvalidDataException("Invalid User Name or Password");
                 }
-                myConnectionObject.Close();                                                                          
+                //  user.IsLoggedIn = true;
+                //  this._userRepository.Update(user);
+                if (password == users.Password)
+                {
+                    response.ObjectResponse = users;
+                    response.Message = $"User {users.UserName} Logged In!";
+                    response.Success = true;
+                }
+                else
+                {
+                    response.ObjectResponse = users;
+                    response.Message = $"Invalid User Name or Password";
+                    response.Success = false;
+                }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
+                     response.Success = false;
+           response.Message = e.Message;
             }
-            if (existingUser.UserName == "User name not found")
-            {
-                return null;
-            }
-            else
-            {
-                return existingUser;
-            }
+            return response;
         }
-    }
+
+                public static User RetrieveStoredUser(string userNameToFind)
+                {
+                    User existingUser = new User("User name not found");
+                    try
+                    {
+                        using SqlConnection myConnectionObject = new SqlConnection(connectionString);                                        //had (this.  before
+                        myConnectionObject.Open();
+
+                        string SQLCodeToRetrieveUser = @"SELECT userId, userPassword, userName FROM MealsUsers WHERE userName = @userName";  //create parametized string
+
+                        using SqlCommand RetrieveUserCommand = new SqlCommand(SQLCodeToRetrieveUser, myConnectionObject);                             //Query results, use this connection and run this query
+
+                        RetrieveUserCommand.Parameters.AddWithValue("@userName", userNameToFind);
+
+                        using SqlDataReader mealsReader = RetrieveUserCommand.ExecuteReader();
+
+                        while (mealsReader.Read())
+                        {
+                            existingUser.Id = mealsReader.GetInt32(0);
+                            string Password = mealsReader.GetString(1);
+                            string userName = mealsReader.GetString(2);
+                            existingUser.UserName = userName;
+                        }
+                        myConnectionObject.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.WriteLine(e.StackTrace);
+                    }
+                    if (existingUser.UserName == "User name not found")
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        return existingUser;
+                    }
+                }
+            }
 }
 
  /*

@@ -7,17 +7,26 @@ using MealsProject.Models;
 
 public class UserController
 {
-    public UserController()
-    {
-     this._userRepository = new UserRepository();
-    }
+     public static Response ValidateUserByNameAndPassword(string userName, string password)
+     {
+        return UserRepository.ValidateUserByNameAndPassword(userName, password);
+     }
+   
+}
 
-    public Response GetUserByName(string username)
+
+
+    //public UserController()
+    //{
+    // this._userRepository = new UserRepository();
+   //}
+
+    /*/public Response GetUserByName(string username)
     {
      var response = new Response();
         try
         {
-         var users = this._userRepository.GetAll();
+         var users = userRepository.GetAll();
          var user = users.FirstOrDefault(x => string.Equals(x.UserName, username, StringComparison.OrdinalIgnoreCase));
          if (user == null)
          {
@@ -42,28 +51,39 @@ public Response ValidateUserByNameAndPassword(string username, string password)
     var response = new Response();
     try
     {
-        var users = this._userRepository.GetAll();
-        var user = users.FirstOrDefault(x => string.Equals(x.UserName, username, StringComparison.OrdinalIgnoreCase) &&
-                                             string.Equals(x.Password, password, StringComparison.OrdinalIgnoreCase));
-        if (user == null)
+        var users = this._userRepository.RetrieveStoredUser(username);
+        //var user = users.FirstOrDefault(x => string.Equals(x.UserName, username, StringComparison.OrdinalIgnoreCase) &&
+        //                                     string.Equals(x.Password, password, StringComparison.OrdinalIgnoreCase));
+        if (users == null)
         {
             throw new InvalidDataException("Invalid User Name or Password");
         }
         //  user.IsLoggedIn = true;
         //  this._userRepository.Update(user);
-        response.ObjectResponse = user;
-        response.Message = $"User {user.UserName} Logged In!";
-    }
-
-        catch (Exception ex)
-     {
-         response.Success = false;
-           response.Message = ex.Message;
+        if (password = users.Password)
+        {
+        response.ObjectResponse = users;
+        response.Message = $"User {users.UserName} Logged In!";
+        response.Success = true;
         }
+        else
+        {
+        response.ObjectResponse = users;
+        response.Message = $"Invalid User Name or Password";
+        response.Success = false;
+        }
+    */
+    //}
 
-        return response;
-    }
-}
+   //     catch (Exception ex)
+  //   {
+  //      response.Success = false;
+   //        response.Message = ex.Message;
+  //      }
+
+  //      return response;
+ //   }
+//}
 
 /*
 public class UserController
