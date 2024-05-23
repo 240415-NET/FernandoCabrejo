@@ -124,9 +124,9 @@ class Program
             Console.WriteLine($"Total Amount: ${session.OrderList.Sum(o => o.Price)}");  //display joint of MealsHistory using itemid to display the item name and price
             if (TakeInputWithMessage("Place Order? (Y/N)").ToUpper() == "Y")
             {
-                Console.WriteLine($"Order Placed Successfully, Good Bye");          //***Need to display options again, instead of asking for user name
+                Console.WriteLine($"Order Placed Successfully");                    //***Need to display options again, instead of asking for user name, removed Good Bye
                 WriteHistoryFromSession();                                          //***or log them out once order is placed, but is better to display options
-                Environment.Exit(0);                              //=> added the following on 5/20 to log them out: Environment.Exit(0); should replace with DisplayOptions(1)**
+                //Environment.Exit(0);                              //=> added the following on 5/20 to log them out: Environment.Exit(0); should replace with DisplayOptions(1)**
                                                                   //=> to see the menu again instead of logging them off
             }
         }
@@ -156,35 +156,38 @@ class Program
         {
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            Console.WriteLine("       * H i S T O R Y*          ");
+            Console.WriteLine("    ~~~ H i S T O R Y  ~~~       ");
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            var historyResponse = historyController.GetAllHistoryForUser(user.Id);
+            //var historyResponse = historyController.GetAllHistoryForUser(user.Id);
 
-            var histories = (List<History>)historyResponse.ObjectResponse;
+            var histories = HistoryController.GetAllHistoryForUser(user.Id);
             if (!histories.Any())
             {
                 Console.WriteLine($"No history found for user {user.UserName}");
             }
-
-            foreach (var history in histories)
+            int i = 0;
+            
+            Console.WriteLine("Date\t Item \t Price");
+            foreach (History h in histories)
             {
-                Console.WriteLine($"***{history.Date}***");
-                Console.WriteLine("--------------------------");
-                foreach (var itemNumber in history.ItemNumbers)
-                {
-                    var menuItem = (Menu)menuController.GetMenuItem(itemNumber).ObjectResponse;
-                    Console.WriteLine($"=>{menuItem.ItemName} ({menuItem.Price})");
-                }
+               Console.WriteLine($"{histories[i].Date}\t{histories[i].ItemName}\t{histories[i].Price}");
+                i++;
+            }
+
+                //foreach (var history in histories)
+                //{
+                //    Console.WriteLine($"***{history.Date}***");
+                //    Console.WriteLine("--------------------------");
+                //    foreach (var itemNumber in history.ItemNumbers)
+                //    {
+                //        var menuItem = (Menu)menuController.GetMenuItem(itemNumber).ObjectResponse;
+                //        Console.WriteLine($"=>{menuItem.ItemName} ({menuItem.Price})");
+                
 
                 Console.WriteLine("--------------------------\r\n");
-            }
-            Console.WriteLine("-------History Complete--------");    //***needs to bo back to displayOption1(1) instead of asking for user name again********
-                                                                     //**********************************************************************************
-                                                                     //could do: if (session != null)
-                                                                     //    {
-                                                                     //       DisplayOptions(1);*
-                                                                     //    }    
-                                                                     //**********************************************************************************  
+            
+            Console.WriteLine("-------History Complete--------");    //***needs to bo back to displayOption(1) instead of asking for user name again********
+                                                                     
         }
 
         private static void WriteHistoryFromSession()
@@ -193,6 +196,7 @@ class Program
             {
                 Console.WriteLine("No user is loaded");
                 return;
+
             }
 
             DateTime dateTime = DateTime.Now;
@@ -243,4 +247,4 @@ class Program
 
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         }
-    }
+}

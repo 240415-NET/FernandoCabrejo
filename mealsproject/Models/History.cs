@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace MealsProject.Models
 {
 
@@ -10,5 +12,10 @@ namespace MealsProject.Models
         public int UserId { get; set; }
 
         public List<int> ItemNumbers { get; set; }
+
+        public int itemNum { get; set; }     //in case want to use a single num in the future instead of a list of one
+
+        public string ItemName { get; set; }
+        public decimal Price { get; set; }
     }
 }

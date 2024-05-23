@@ -6,7 +6,7 @@ namespace MealsProject.DataAccessLayer
     
 
     
-         internal class MenuRepository     //all go to BaseRepository
+    public class MenuRepository     //all go to BaseRepository, change from internal to public
     {
         public static string connectionPath = @"C:\Users\U1H007\Revature Engineer Bootcamp\FernandoCabrejo\mealsproject\ConnectionStringMealsProject.txt";
 
