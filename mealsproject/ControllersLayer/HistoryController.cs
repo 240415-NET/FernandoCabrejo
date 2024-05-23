@@ -18,8 +18,8 @@ namespace MealsProject.ControllersLayer
 
             try
             {
-                var histories = this._historyRepository.GetAll().Where(HistoryController => HistoryController.UserId == userId).ToList();   //changing GetAll to Get
-                response.ObjectResponse = histories;
+             //   var histories = this._historyRepository.GetAll().Where(HistoryController => HistoryController.UserId == userId).ToList();   //changing GetAll to Get
+                response.ObjectResponse = null;                                                   //histories;
             }
             catch (Exception ex)
             {
