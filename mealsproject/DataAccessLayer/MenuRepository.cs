@@ -6,7 +6,7 @@ namespace MealsProject.DataAccessLayer
     
 
     
-    public class MenuRepository     //all go to BaseRepository, change from internal to public
+    public class MenuRepository                                                                                        //change from internal to public
     {
         public static string connectionPath = @"C:\Users\U1H007\Revature Engineer Bootcamp\FernandoCabrejo\mealsproject\ConnectionStringMealsProject.txt";
 
@@ -28,12 +28,11 @@ namespace MealsProject.DataAccessLayer
             using SqlConnection myConnectionObject = new SqlConnection(connectionString);
             myConnectionObject.Open();
 
-            string commandTextForRetrievingChoicesList = @"SELECT * FROM MealsMenu;";               //Display all items when called from 1. View Menu
+            string commandTextForRetrievingChoicesList = @"SELECT * FROM MealsMenu;";               //Displays all items when called from 1. View Menu
 
             using SqlCommand commandForRetrievingChoicesList = new SqlCommand(commandTextForRetrievingChoicesList, myConnectionObject);
             
             using SqlDataReader reader = commandForRetrievingChoicesList.ExecuteReader();
-            //Console.WriteLine("here is braking");
             while (reader.Read())
             {
                 var menu = new Menu();
@@ -51,14 +50,3 @@ namespace MealsProject.DataAccessLayer
         } 
     }
 }
-
-
-
-/*
-public class MenuRepository                                                                                       // taking out ': BaseRepository<User>'          
-    {
-        
-        
-    }
-
-*/

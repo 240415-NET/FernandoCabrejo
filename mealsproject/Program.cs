@@ -28,23 +28,23 @@ class Program
                 {
 
                     DisplayOptions(1);                                                           //To see the options to select, at the bottom of this prog
-                    var option = TakeInputWithMessage("what would you like to do next? Enter Option:"); //method to get input
+                    var option = TakeInputWithMessage("what would you like to do next? Enter Option:"); //method to get input from user
 
                     switch (option)                                   //switch evaluates the number entered in option to the case number
                     {
                         case "1":
-                            DisplayMenu();                      //displays the menu 1.View Menu 2.Place Order 3. View History 4.Log out
+                            DisplayMenu();                            //displays the menu 1.View Menu 2.Place Order 3. View History 4.Log out
                             break;
                         case "2":
-                            ChooseItems(user);
+                            ChooseItems(user);                        //places the order from a selection of items
                             break;
                         case "3":
-                            DisplayHistoryForSessionUser(user);
+                            DisplayHistoryForSessionUser(user);       //shows the history of all the orders
                             break;
                         case "4":
                             Console.WriteLine("Thanks for using the Meal App Project");
                             ClearSession();
-                            Environment.Exit(0);
+                            Environment.Exit(0);                       //exits the application on selection option 4
                             break;
                         default:
                             Console.WriteLine("Invalid Option... Try Again");   //test for invalid option to try again
@@ -60,19 +60,11 @@ class Program
             }
             while (true);
         }
-    
-                                                                              // If a user has already logged in, do you need to ask them for their username again?
-    private static void TakeOrder(User user)
+                                                                                  
+    private static void TakeOrder(User user)                                    //display the options to select when placing an order
         {
-            // var loadUsername = TakeInputWithMessage("Load Username:");         //Removing this code to not ask their username again
-            // var loadUserResponse = userController.GetUserByName(loadUsername);
-            // Console.WriteLine(loadUserResponse.Message);
-            // if (loadUserResponse.Success)
-            // {
-            //     var loadedUser = (User)loadUserResponse.ObjectResponse;
             session = new Session(user);
-            // Console.WriteLine($"{loadUsername} is successfully loaded in the session");
-
+            
             var goBack = false;
             do
             {
@@ -102,11 +94,6 @@ class Program
                         break;
                 }
             } while (!goBack || session != null);
-            //  }
-            //  else
-            //  {
-            //      Console.WriteLine($"{loadUsername} could not be loaded in the session");
-            //  }
         }
 
         private static void ChooseItems(User user)
@@ -117,22 +104,20 @@ class Program
             {
                 var menuItemNumber = TakeInputWithMessage("Enter Menu Item Number:");  //have to interact with SQL MealsMenu to retrieve the list of items
                 var item = (Menu)menuController.GetMenuItem(int.Parse(menuItemNumber)).ObjectResponse;
-                session.OrderList.Add(item);                                           //insert a row in MealsHistory with id,date, userid, itemid
+                session.OrderList.Add(item);                                           //inserts a row in MealsHistory with id, date, userid, itemid
                 Console.WriteLine($"{item.ItemName} added to order.\r\n");
             }
             while (TakeInputWithMessage("Add More? (Y/N)").ToUpper() == "Y");
-            Console.WriteLine($"Total Amount: ${session.OrderList.Sum(o => o.Price)}");  //display joint of MealsHistory using itemid to display the item name and price
+            Console.WriteLine($"Total Amount: ${session.OrderList.Sum(o => o.Price)}");  //displays the sum of the items purchased
             if (TakeInputWithMessage("Place Order? (Y/N)").ToUpper() == "Y")
             {
-                Console.WriteLine($"Order Placed Successfully");                    //***Need to display options again, instead of asking for user name, removed Good Bye
-                WriteHistoryFromSession();                                          //***or log them out once order is placed, but is better to display options
-                //Environment.Exit(0);                              //=> added the following on 5/20 to log them out: Environment.Exit(0); should replace with DisplayOptions(1)**
-                                                                  //=> to see the menu again instead of logging them off
+                Console.WriteLine($"Order Placed Successfully");                    //displays options again
+                WriteHistoryFromSession();                                          //records items into history
             }
         }
 
-        private static void DisplayMenu()                    //Static means the method DisplayMenu belongs to the program class and not an object of the program class.
-        {                                                    //Void menas that the method does not have a return value.
+        private static void DisplayMenu()                    //Static means the method DisplayMenu belongs to the program class and not an object of the program class
+        {                                                    //Void means that the method does not have a return value.
             Console.WriteLine(Environment.NewLine);          //this is a property that adds a new line to a string
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.WriteLine("          * M E N U *            ");
@@ -142,51 +127,38 @@ class Program
 
             foreach (var item in menuItems)
             {
-                Console.WriteLine($"{item.Id}=> {item.ItemName} (${item.Price})");  //change to come from SQL instead of json
-            }                                                                      //** needs to display the available operation options DisplayMenu()  *****
-        }                                                                          //instead of asking for the user name and password again ***
-                                                                                   //if user is already in, go back to display options ********
+                Console.WriteLine($"{item.Id}=> {item.ItemName} (${item.Price})");  //changed to come from SQL instead of json
+            }                                                                      
+        }                                                                          
+                                                                                   
         private static void ClearSession()
         {
             Console.WriteLine("Clearing Session!");
             session = null;
         }
 
-        private static void DisplayHistoryForSessionUser(User user)   //using parameter user
+        private static void DisplayHistoryForSessionUser(User user)                          //using parameter user
         {
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.WriteLine("    ~~~ H i S T O R Y  ~~~       ");
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            //var historyResponse = historyController.GetAllHistoryForUser(user.Id);
-
+            
             var histories = HistoryController.GetAllHistoryForUser(user.Id);
             if (!histories.Any())
             {
                 Console.WriteLine($"No history found for user {user.UserName}");
+                return;
             }
-            int i = 0;
             
-            Console.WriteLine("Date\t Item \t Price");
-            foreach (History h in histories)
+            Console.WriteLine("Date\t\t Item\t\t\t\tPrice");
+            foreach (var history in histories)
             {
-               Console.WriteLine($"{histories[i].Date}\t{histories[i].ItemName}\t{histories[i].Price}");
-                i++;
+                Console.WriteLine($"{history.Date.ToShortDateString()}\t{history.ItemName.PadRight(25)}\t{history.Price}");
             }
-
-                //foreach (var history in histories)
-                //{
-                //    Console.WriteLine($"***{history.Date}***");
-                //    Console.WriteLine("--------------------------");
-                //    foreach (var itemNumber in history.ItemNumbers)
-                //    {
-                //        var menuItem = (Menu)menuController.GetMenuItem(itemNumber).ObjectResponse;
-                //        Console.WriteLine($"=>{menuItem.ItemName} ({menuItem.Price})");
-                
-
-                Console.WriteLine("--------------------------\r\n");
             
-            Console.WriteLine("-------History Complete--------");    //***needs to bo back to displayOption(1) instead of asking for user name again********
+            Console.WriteLine("--------------------------\r\n");            
+            Console.WriteLine("-------History Complete--------");                              //goes back to displayOption(1)
                                                                      
         }
 
@@ -196,14 +168,13 @@ class Program
             {
                 Console.WriteLine("No user is loaded");
                 return;
-
             }
 
             DateTime dateTime = DateTime.Now;
 
             var history = new History
             {
-                Date = dateTime.ToString(),
+                Date = dateTime,
                 ItemNumbers = session.OrderList.Select(x => x.Id).ToList(),
                 UserId = session.User.Id
             };

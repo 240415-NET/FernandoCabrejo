@@ -14,20 +14,6 @@ namespace MealsProject.ControllersLayer
 
         public static List<History> GetAllHistoryForUser(int userId)
         {
-            //var response = new Response();
-
-            //try
-            //{
-              //var histories = this._historyRepository.GetAll().Where(HistoryController => HistoryController.UserId == userId).ToList();
-                                                                               //Back to GetAll, check HistoryRepository
-
-              //response.ObjectResponse = histories;                                                   //changed from null to histories;
-            //}
-            //catch (Exception ex)
-            //{
-             //   response.Success = false;
-            //    response.Message = ex.Message;
-            //}
             return HistoryRepository.RetrieveHistoryList(userId);
         }
          

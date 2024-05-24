@@ -6,7 +6,7 @@ namespace MealsProject.DataAccessLayer
     using System.Reflection.Metadata;
     using MealsProject.Models;
 
-    public class UserRepository                                                                                  // taking out ': BaseRepository<User>'          
+    public class UserRepository                                                                                         
     {
         public static string connectionPath = @"C:\Users\U1H007\Revature Engineer Bootcamp\FernandoCabrejo\mealsproject\ConnectionStringMealsProject.txt";
 
@@ -21,16 +21,10 @@ namespace MealsProject.DataAccessLayer
             try
             {
                 var users = RetrieveStoredUser(username);
-               // Console.WriteLine(users.UserName);
-               // Console.WriteLine(users.Password);
-                //var user = users.FirstOrDefault(x => string.Equals(x.UserName, username, StringComparison.OrdinalIgnoreCase) &&
-                //                                     string.Equals(x.Password, password, StringComparison.OrdinalIgnoreCase));
                 if (users == null)
                 {
                     throw new InvalidDataException("Invalid User Name or Password");
                 }
-                //  user.IsLoggedIn = true;
-                //  this._userRepository.Update(user);
                 if (password == users.Password)
                 {
                     response.ObjectResponse = users;
@@ -54,15 +48,15 @@ namespace MealsProject.DataAccessLayer
 
                 public static User RetrieveStoredUser(string userNameToFind)
                 {
-                    User existingUser = new User("User name not found");
+                    User existingUser = new User();
                     try
                     {
-                        using SqlConnection myConnectionObject = new SqlConnection(connectionString);                                        //had (this.  before
+                        using SqlConnection myConnectionObject = new SqlConnection(connectionString);                                        
                         myConnectionObject.Open();
 
-                        string SQLCodeToRetrieveUser = @"SELECT userId, userPassword, userName FROM MealsUsers WHERE userName = @userName";  //create parametized string
+                        string SQLCodeToRetrieveUser = @"SELECT userId, userPassword, userName FROM MealsUsers WHERE userName = @userName";  //use this connection and run this query
 
-                        using SqlCommand RetrieveUserCommand = new SqlCommand(SQLCodeToRetrieveUser, myConnectionObject);                             //Query results, use this connection and run this query
+                        using SqlCommand RetrieveUserCommand = new SqlCommand(SQLCodeToRetrieveUser, myConnectionObject);                    
 
                         RetrieveUserCommand.Parameters.AddWithValue("@userName", userNameToFind);
 
@@ -94,65 +88,3 @@ namespace MealsProject.DataAccessLayer
                 }
             }
 }
-
- /*
-    public User Get(int id)
-        {
-            using SqlConnection connection = new SqlConnection(connectionString);                         //Using makes it a disposable connection once we are done with it
-                                                                                                          //created SqlConnection object, constructor needs the connectionString
-            connection.Open();                                                                            //Logical openning a connection with connection.Open
-
-            User user = new();
-
-            string command = @"SELECT userId, userPassword, userName from MealsUsers where userId = @id";  //create parametized string
-
-            using SqlCommand mealsUsers = new SqlCommand(command, connection);                             //Query results, use this connection and run this query
-
-            mealsUsers.Parameters.AddWithValue("@id", Convert.ToString(id));                                //
-
-            using SqlDataReader mealsReader = mealsUsers.ExecuteReader();
-
-            while (mealsReader.Read())
-            {
-                user.Id = mealsReader.GetInt32(0);
-                user.Password = mealsReader.GetString(1);
-                user.UserName = mealsReader.GetString(2);
-            }
-            connection.Close();                                                                             //Manually closing connection and dispose of entire object
-            return user;                                                                                    //return user object
-        }
-
-
-
-//old GetAll method
-        /*                                                                                                     Verify the usability of the removed code
-         public List<User> GetAll()
-         {
-             SqlConnection = new SqlConnection(connectionString);
-
-             User user = new User();
-
-             List<User> users = new List<User>();
-
-             string command = $"Select * from mealsuser";
-
-             using (SqlConnection)
-             {
-                 sqlCommand.CommandType = System.Data.CommandType.Text;
-                 SqlConnection.Open();
-                 sqlCommand = new SqlCommand(command, sqlConnection);
-                 SqlDataReader reader = sqlCommand.ExecuteReader();
-
-                 while (reader.Read())
-                 {
-                     user.Id = reader.GetInt32(0);
-                     user.UserName = reader.GetString(1);
-                     user.Password = reader.GetString(2);
-
-                     users.Add(user);
-                 }
-             }
-
-             return users;
-         }
-         */
