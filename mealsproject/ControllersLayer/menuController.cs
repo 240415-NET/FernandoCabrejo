@@ -5,7 +5,7 @@ namespace MealsProject.ControllersLayer
 
     internal class MenuController
     {
-        private readonly MenuRepository _menuRepository;
+        public readonly MenuRepository _menuRepository;                     //communicates with menuRepository, changed from internal to public
 
         public MenuController()
         {
@@ -14,7 +14,6 @@ namespace MealsProject.ControllersLayer
 
         public Response GetAllMenuItems()
         {
-
             var response = new Response();
             try
             {
@@ -27,7 +26,6 @@ namespace MealsProject.ControllersLayer
                 response.Success = false;
                 response.Message = ex.Message;
             }
-
             return response;
         }
 

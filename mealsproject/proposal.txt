@@ -14,27 +14,18 @@ My app is about tracking meal plans for people who subscribe.
 
 What I want to do:
 
--Start with a menu - mainMenu
- 1-Check user?
- 2-Add user?
- 3-Delete user?
- 4-Load Menu?
- 5-Start?
- 6-Exit
-
--Handling the user option that was selected from mainMenu
+-Getting into the app
  1-prompt to enter a user name
- 2-generate a userId(possibly using GUID) - go back to mainMenu
+ 2-prompt to enter the existing password
  3-search for the name to see if existing already
  4-present a user menu
- 5-Exit
 
--User Menu(userMenu) -Data validation to only enter number selection
- 1-Load Menu
- 2-Choose Items
+ -User Menu
+ 1-View Menu
+ 2-Place an Order
  3-Display History
- 4-Go back
- 5-Exit
+ 4-Log out
+
    1-Collect/prompt user for entry of meal selection (will store to DB) - Once entered return to 'userMenu'
    2-Will display all prior stored meal entries including the date entered and price in single view 
         - mealSelectionMenu / mealSelectionController / mealSelectionRecordRepository -- return to userMenu - hitting number for Exit
@@ -42,22 +33,21 @@ What I want to do:
 
 -Models(what we are trying to work with and store)--create separate folders to store all models .CS files by topic
    -userProfile
-      -userId (GUID) // userid will be primary key of this table
+      -userId // userid will be primary key of this table
       -userName (string)
    -Menu
    -History
    -Response
    -Session
-      -to keep track of user profile in json
 
    -mealSelectionRecord
-      -userId (GUID) - same user ID can have multiple meal selections // foreign key references the primary key(which is in userProfile)
-      -mealId (GUID) // primary key  for this table
+      -userId - same user ID can have multiple meal selections // foreign key references the primary key(which is in mealsHistory table)
+      -mealId  // primary key  for this table
       -mealChoice (string)
       -mealPrice (decimal)
-      -dateEntered (string) // should be unique and current date no future dates
+      -dateEntered (date) // should be unique and current date no future dates
 
-Separate folders for presentation layer (menus in this case, data access layer(storing of data in the database) and controllers(any specific business logic, etc.needed)
+Separate folders for presentation layer -menus in this case, data access layer(storing of data in the database) and controllers(any specific business logic, etc.needed)
 
 Presentation Directory
   -mainMenu

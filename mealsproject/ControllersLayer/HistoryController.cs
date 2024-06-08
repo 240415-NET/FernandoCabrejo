@@ -3,34 +3,21 @@ namespace MealsProject.ControllersLayer
     using MealsProject.DataAccessLayer;
     using MealsProject.Models;
 
-    internal class HistoryController
+    public class HistoryController                                      //changed from internal to public
     {
-        private readonly HistoryRepository _historyRepository;
+        private readonly HistoryRepository _historyRepository;          //communicates with historyRepository
 
         public HistoryController()
         {
          this._historyRepository = new HistoryRepository();
         }
 
-        public Response GetAllHistoryForUser(int userId)
+        public static List<History> GetAllHistoryForUser(int userId)
         {
-            var response = new Response();
-
-            try
-            {
-                var histories = this._historyRepository.GetAll().Where(HistoryController => HistoryController.UserId == userId).ToList();
-                response.ObjectResponse = histories;
-            }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-
-            return response;
-
+            return HistoryRepository.RetrieveHistoryList(userId);
         }
-
+         
+                              
         public Response AddHistory(History history)
         {
             var response = new Response();

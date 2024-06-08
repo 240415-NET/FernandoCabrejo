@@ -1,6 +1,6 @@
 namespace MealsProject.Models
 {
-    internal class Response
+    public class Response
     {
         public bool Success { get; set; } = true;
 
