@@ -1,10 +1,57 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Channels;
 namespace pracc;
+
+
+
+/*
+//exam question
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<int> myList = new List<int>() { 2, 3, 4 };
+
+        int calculate = 1;
+
+        for (int i = 0; i < myList.Count; i++) {
+            if (myList[i] % 2 != 0) {
+                myList[i] = 0;
+            }
+            calculate = calculate * myList[i];
+        }
+        Console.WriteLine(calculate);
+    }
+}
 
 
 
 
 /*
+//question from exam
+class Program
+{
+    static int PlusMethod(int x, int y)
+    {
+        return x + y;
+    }
+
+    static double PlusMethod(double x, double y)
+    {
+        return x + y;
+    }
+    static void Main(string[] args)
+    {
+        int myNum1 = PlusMethod(9, 13);
+        double myNum2 = PlusMethod(6.2, 4.34);
+        Console.WriteLine("Int: " + myNum1);
+        Console.WriteLine("Double: " + myNum2);
+    }
+
+}
+
+
 //question from exam
 class Program
 {
@@ -65,7 +112,7 @@ class Program
     }
 
 }
-
+*/
 
 
 
@@ -76,6 +123,7 @@ class Program
     {
         string[] arr = { "foo", "bar", "foobar", "ba" };
         for (int i = 0; i < arr.Length; i++) //array is up to 3 elements. length is 4
+        //Console.WriteLine($"The length of the array is {arr.Length}");
         {
             if (i > 1 && arr[i].Length >= 3)   //i is 2 or 3 or 4 and the element is 2 or 4 (but is only 2 which is the 3rd space )
             {
@@ -92,7 +140,7 @@ class Program
 
 
 
-
+/*
 //question from exam
 class Program
 {
