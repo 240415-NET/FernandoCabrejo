@@ -18,7 +18,7 @@ const changeTextButton = document.getElementById('changeTextButton');
 //Now we will add a listener to that button we selected and store in changeTextbutton above
 changeTextButton.addEventListener('click', () => {
 
-    console.log('Yep, my button was indeed clicked!');
+    console.log('Yep, my button was indeed clicked, and the HTML should be updated!');
 
     //To update the text inside of out p-tag, we will select it via it's ID, as we did for the button above
     //the name of our Javascript variable does not need to match the name of the ID in the html element w34e select

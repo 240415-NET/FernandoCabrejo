@@ -1,7 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Text;
 using System.Threading.Channels;
+
 namespace pracc;
+public static class SecretCodeConverter
+{
+    public static string CreateSecretCode(string s)
+    {
+        //string s = "AbCdyx";
+
+        StringBuilder secretCode = new StringBuilder();
+
+        foreach (char c in s.ToUpper())
+        {
+            if (char.IsLetter(c))
+            {
+                int code = c - 'A' + 1;
+                secretCode.Append(code.ToString("D2"));
+            }
+            else
+            {
+                secretCode.Append(c);
+            }
+        }
+        return secretCode.ToString();
+    }
+
+    public static void Main()
+    {
+        string input = "AbCygHg";
+        string secretCode = CreateSecretCode(input);
+        Console.WriteLine($"Secret Code for '{input}' is: {secretCode}");
+    }
+}
+
+/*
+solution from Copilot
+public class SecretCodeConverter
+{
+    public static string CreateSecretCode(string s)
+    {
+        //string s = "AbCdyx";
+
+        StringBuilder secretCode = new StringBuilder();
+
+        foreach (char c in s.ToUpper())
+        {
+            if (char.IsLetter(c))
+            {
+                int code = c - 'A' + 1;
+                secretCode.Append(code.ToString("D2"));
+            }
+            else
+            {
+                secretCode.Append(c);
+            }
+        }
+        return secretCode.ToString();
+    }
+
+    public static void Main()
+    {
+        string input = "AbCygHg";
+        string secretCode = CreateSecretCode(input);
+        Console.WriteLine($"Secret Code for '{input}' is: {secretCode}");
+    }
+}
 
 
 
@@ -112,7 +178,7 @@ class Program
     }
 
 }
-*/
+
 
 
 
@@ -134,8 +200,6 @@ class Program
     }
 
 }
-
-
 
 
 
