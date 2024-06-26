@@ -7,17 +7,40 @@ class Program
 {
     static void Main(string[] args)
     {
+        string itemsInList = "";
         String answer = "";
         List<string> groceryList = new List<string>();
+        bool moreItems = true;
 
         Console.WriteLine("Grocery List");
+        do
+        {
+            Console.WriteLine("Enter an item: ");
+            itemsInList = Console.ReadLine();
+            groceryList.Add(itemsInList);
 
+            Console.WriteLine("Do you want another? yes or no:");
+            answer = Console.ReadLine();
+            if (answer.ToLower().Trim() == "yes")
+            {
+                moreItems = true;
+            }
+            else if (answer.ToLower().Trim() == "no")
+            {
+                moreItems = false;
+            }
+            else
+            {
+                moreItems = false;
+            }
 
-        Console.WriteLine("Enter an item: ");
-        
-        answer = Console.ReadLine();
+        } while (moreItems == true);
 
-
+        foreach (string item in groceryList)
+        {
+            Console.WriteLine(item);
+        }
+    }
 }
 //write the title and write the question "Enter an item:", leave a few blank lines
 //define a way to capture the entry, then add string variable set to "" to hold the answer and 
