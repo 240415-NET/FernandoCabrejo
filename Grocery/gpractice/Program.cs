@@ -31,8 +31,9 @@ class Program
             }
             else
             {
-                moreItems = false;
-            }
+                //moreItems = false;
+                throw new Exception("Should be yes or no");
+            } 
 
         } while (moreItems == true);
 
