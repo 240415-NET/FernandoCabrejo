@@ -1,9 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Channels;
+//using pracc;
 
+class Program
+{
+    private static bool i;
+
+    static int Main(string[] args)
+    {
+        int[] A = { 1, 4, 5, 2, 7 };
+        int K = 4;
+        HashSet<int> set = new HashSet<int>();
+
+        foreach (int num in A)
+        {
+            set.Add(num);
+        }
+        for (int i = K + 1; ; i++)
+        {
+            if (!set.Contains(i))
+            {
+                return i;
+            }
+           Console.WriteLine(i+1); 
+        }
+        
+     }
+}
+
+
+
+/*  Solution from Ron from the class
 namespace pracc;
 public static class SecretCodeConverter
 {
